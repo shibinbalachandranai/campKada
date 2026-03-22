@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import Badge from "./Badge";
-import { formatPrice } from "@/lib/utils";
 import type { Product, Rental, Service } from "@/types";
 
 type ShopProps = { variant: "shop"; item: Product };
@@ -51,7 +50,7 @@ export default function ItemCard({ variant, item }: ItemCardProps) {
         <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
           {variant === "shop" && (
             <>
-              <span className="font-bold text-forest">{formatPrice((item as Product).price)}</span>
+              <span className="text-sm text-bark/50 italic">Enquire for pricing</span>
               <Badge variant={(item as Product).inStock ? "in-stock" : "out-of-stock"}>
                 {(item as Product).inStock ? "In Stock" : "Out of Stock"}
               </Badge>
@@ -59,9 +58,7 @@ export default function ItemCard({ variant, item }: ItemCardProps) {
           )}
           {variant === "rental" && (
             <>
-              <span className="font-bold text-forest">
-                {formatPrice((item as Rental).pricePerDay)}<span className="text-sm font-normal text-bark/60">/day</span>
-              </span>
+              <span className="text-sm text-bark/50 italic">Enquire for pricing</span>
               <Badge variant={(item as Rental).available ? "available" : "unavailable"}>
                 {(item as Rental).available ? "Available" : "Unavailable"}
               </Badge>
