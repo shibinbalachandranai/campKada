@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Making of CampKada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest: #2D5016;
+      --forest-light: #3a6b1e;
+      --bark: #6B3D1E;
+      --sand: #C4A882;
+      --cream: #F5F0E8;
+      --dark: #1a1a1a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0e0e0e;
+      color: #e8e8e8;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(160deg, #0e0e0e 0%, #1a2e0a 50%, #0e0e0e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(45,80,22,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(196,168,130,0.4);
+      color: var(--sand);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+      margin-bottom: 2rem;
+      animation: fadeUp 1s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: #fff;
+      animation: fadeUp 1s 0.15s ease both;
+    }
+
+    .hero-title span {
+      color: var(--sand);
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(255,255,255,0.5);
+      max-width: 520px;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+
+    .hero-scroll {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+    }
+
+    .chapter {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0 2rem;
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .chapter.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .chapter-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .chapter-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--forest);
+      border: 2px solid var(--forest-light);
+      box-shadow: 0 0 12px rgba(45,80,22,0.6);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .chapter-line {
+      width: 1px;
+      flex: 1;
+      background: linear-gradient(to bottom, rgba(45,80,22,0.6), rgba(45,80,22,0.1));
+      margin-top: 8px;
+    }
+
+    .chapter-num {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(196,168,130,0.5);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .chapter-content {}
+
+    .chapter-tag {
+      display: inline-block;
+      background: rgba(45,80,22,0.2);
+      border: 1px solid rgba(45,80,22,0.4);
+      color: #7db85a;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+
+    .chapter-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .chapter-body {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.9;
+    }
+
+    .chapter-body p + p { margin-top: 1rem; }
+
+    /* ── CALLOUT BLOCKS ── */
+    .callout {
+      margin: 1.5rem 0;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .callout-quote {
+      background: rgba(45,80,22,0.12);
+      border-left: 3px solid var(--forest);
+      color: rgba(255,255,255,0.7);
+      font-style: italic;
+    }
+
+    .callout-quote strong {
+      display: block;
+      font-style: normal;
+      color: #7db85a;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .callout-code {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      color: #7db85a;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+
+    .callout-code .comment { color: #555; }
+    .callout-code .key { color: var(--sand); }
+
+    .callout-warn {
+      background: rgba(107,61,30,0.15);
+      border: 1px solid rgba(107,61,30,0.3);
+      color: rgba(255,255,255,0.6);
+      border-radius: 10px;
+    }
+
+    .callout-warn strong { color: #d4874a; }
+
+    .callout-success {
+      background: rgba(45,80,22,0.15);
+      border: 1px solid rgba(45,80,22,0.35);
+      color: rgba(255,255,255,0.65);
+      border-radius: 10px;
+    }
+
+    .callout-success strong { color: #7db85a; }
+
+    /* ── PILL LIST ── */
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .pill {
+      background: #1c1c1c;
+      border: 1px solid #2e2e2e;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+    }
+
+    .pill.green {
+      background: rgba(45,80,22,0.2);
+      border-color: rgba(45,80,22,0.5);
+      color: #7db85a;
+    }
+
+    /* ── STAT STRIP ── */
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: #1f1f1f;
+      border: 1px solid #1f1f1f;
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+
+    .stat-item {
+      background: #131313;
+      padding: 1.25rem 1rem;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #7db85a;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── NEXT STEPS ── */
+    .next-steps {
+      background: linear-gradient(135deg, #111 0%, #162209 100%);
+      border: 1px solid rgba(45,80,22,0.3);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+    }
+
+    .next-steps h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .step-item:last-child { border-bottom: none; }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(45,80,22,0.3);
+      border: 1px solid rgba(45,80,22,0.5);
+      color: #7db85a;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    .step-text strong { color: rgba(255,255,255,0.85); }
+
+    /* ── FOOTER ── */
+    .story-footer {
+      text-align: center;
+      padding: 4rem 1.5rem 5rem;
+      border-top: 1px solid #1c1c1c;
+    }
+
+    .story-footer .logo-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--forest);
+      margin-bottom: 0.75rem;
+    }
+
+    .story-footer p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.05em;
+    }
+
+    .story-footer .tech-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1.25rem 0;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      color: rgba(255,255,255,0.1);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 0.7; transform: scaleY(1.1); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .chapter { grid-template-columns: 1fr; }
+      .chapter-left { flex-direction: row; margin-bottom: 1rem; }
+      .chapter-line { display: none; }
+      .chapter-dot { margin-top: 0; margin-right: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">A Development Story</div>
+    <h1 class="hero-title">The Making of<br /><span>CampKada</span></h1>
+    <p class="hero-sub">From a mountain trail frustration to a live outdoor lifestyle platform — built with Claude Code.</p>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <div class="timeline">
+
+    <!-- Chapter 1 -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">01</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">The Origin</div>
+        <h2 class="chapter-title">The Idea Before the Code</h2>
+        <div class="chapter-body">
+          <p>It started not with a laptop, but with a backpack.</p>
+          <p>Somewhere between the snow-covered ridgelines of <strong style="color:#fff">Kedarkantha</strong> and the thin air near <strong style="color:#fff">Everest Base Camp</strong>, a frustration was born. Every trip meant the same ritual — hours lost across a dozen websites hunting for the right tent, a reliable rental, a guide who actually knew the mountain.</p>
+          <div class="callout callout-quote">
+            <strong>"There had to be a better way."</strong>
+            That frustration became a conviction — build it yourself. One roof. All the gear. Real expertise. No compromise on quality.
+          </div>
+          <p>And so CampKada was conceived. Not as a startup pitch or a business plan, but as a traveller's answer to a traveller's problem.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">02</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">Architecture</div>
+        <h2 class="chapter-title">Enter Claude Code</h2>
+        <div class="chapter-body">
+          <p>The development began with a conversation — literally. Instead of opening a blank IDE and staring at a cursor, the founder opened Claude Code and started talking about what CampKada needed to be.</p>
+          <p>The stack was decided fast:</p>
+          <div class="pill-list">
+            <span class="pill green">Next.js App Router</span>
+            <span class="pill green">TypeScript</span>
+            <span class="pill green">Tailwind CSS</span>
+            <span class="pill green">MongoDB Atlas</span>
+            <span class="pill green">Vercel</span>
+            <span class="pill green">Zod Validation</span>
+          </div>
+          <p>The brand palette was defined as Tailwind tokens — never a raw hex value in the codebase:</p>
+          <div class="callout-code">
+            <span class="key">forest</span>: #2D5016 &nbsp;<span class="comment">// forest green</span><br />
+            <span class="key">bark</span>: &nbsp; #6B3D1E &nbsp;<span class="comment">// bark brown</span><br />
+            <span class="key">sand</span>: &nbsp; #C4A882 &nbsp;<span class="comment">// sandy beige</span><br />
+            <span class="key">cream</span>: &nbsp;#F5F0E8 &nbsp;<span class="comment">// off-white</span>
+          </div>
+          <p>Phase 1 was deliberately scoped: <strong style="color:#fff">browse + enquiry, no cart, no payments.</strong> A CLAUDE.md file was written to anchor every future decision — patterns, color tokens, critical files, Phase 2 compatibility notes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">03</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">Backend</div>
+        <h2 class="chapter-title">Building the Core</h2>
+        <div class="chapter-body">
+          <p>The first critical file was <code style="color:#7db85a;font-family:monospace">lib/mongodb.ts</code> — a singleton connection using the official Next.js pattern. Every API route would depend on this one file. It had to be right before anything else could work.</p>
+          <p>Next came the Enquiry schema — capturing every message a customer ever sent. Indexed on <code style="color:#7db85a;font-family:monospace">email</code>, <code style="color:#7db85a;font-family:monospace">createdAt</code>, and a sparse <code style="color:#7db85a;font-family:monospace">status</code> index for the "show all new enquiries" query.</p>
+          <div class="callout-code">
+            <span class="comment">// Single endpoint. All form types converge here.</span><br />
+            POST /api/enquiry<br /><br />
+            <span class="key">type</span>: "shop" | "rental" | "service" | "general"<br />
+            <span class="key">details</span>: whitelisted per type via Zod<br />
+            <span class="key">honeypot</span>: silent bot rejection<br />
+            <span class="key">notification</span>: async Slack webhook
+          </div>
+          <p>Shared UI components kept the codebase lean — one <code style="color:#7db85a;font-family:monospace">ItemCard</code> with a <code style="color:#7db85a;font-family:monospace">variant</code> prop instead of three separate card components. One <code style="color:#7db85a;font-family:monospace">EnquiryFormBase</code> powering all four form variants.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 4 -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">04</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">Brand Voice</div>
+        <h2 class="chapter-title">The Content Pass</h2>
+        <div class="chapter-body">
+          <p>The About page was where CampKada stopped being a template and started being a brand.</p>
+          <p>Placeholder copy was replaced with the real story — real mountains, real lessons. The mission and vision were rewritten with actual words. And then, pulled from the body text and rendered large, bold, forest green:</p>
+          <div class="callout callout-quote">
+            <strong>We create journeys.<br />We help create memories.</strong>
+            Highlighted in forest green — given the weight it deserved.
+          </div>
+          <div class="callout callout-quote">
+            "From the moment you pack your bag to the stories you bring back home — Camp Kada is your silent travel companion."
+          </div>
+          <p>The brand now had a voice. And it sounded like the mountains it was born from.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 5 -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">05</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">UI Redesign</div>
+        <h2 class="chapter-title">The Home Page Transformation</h2>
+        <div class="chapter-body">
+          <p>The original home page had four icon-based feature cards. Clean. Generic. Forgettable.</p>
+          <p>The founder shared a reference image. A new vision — real product photography, real service categories, image cards with "Shop Now" buttons.</p>
+          <div class="divider">before → after</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;">
+            <div class="callout callout-warn" style="font-size:0.82rem;">
+              <strong>Removed</strong><br/>
+              Curated Quality<br/>Local Expertise<br/>Rent, Don't Lug<br/>Guided by Passion
+            </div>
+            <div class="callout callout-success" style="font-size:0.82rem;">
+              <strong>Added</strong><br/>
+              Camping Tents<br/>Hiking Gear<br/>Outdoor Gadgets<br/>+ 3 Service cards
+            </div>
+          </div>
+          <p>Then the hero got its own upgrade — <code style="color:#7db85a;font-family:monospace">hero.png</code> as a full-cover background image with a dark gradient overlay. <em style="color:rgba(255,255,255,0.5)">"Adventure starts with the right gear."</em> Now it meant something you could see.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 6 -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">06</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">Business Decision</div>
+        <h2 class="chapter-title">The Pricing Decision</h2>
+        <div class="chapter-body">
+          <p>Mid-development, a business decision changed the UI. Prices were in the data, rendering on cards and detail pages. But CampKada wasn't ready to commit to fixed pricing yet — the market was still being understood.</p>
+          <p>One conversation. One clear instruction:</p>
+          <div class="callout callout-quote">
+            <strong>"Hide the prices."</strong>
+            No pricing discussions. No debates. Just execute.
+          </div>
+          <p>Every price span was replaced with quiet italic text: <em style="color:rgba(255,255,255,0.45)">"Enquire for pricing."</em> Stock and availability badges stayed. The structure stayed. When pricing was ready, restoring it would take minutes.</p>
+          <p>This is what a well-architected codebase enables — business decisions that don't require surgery.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 7 -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">07</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">Production</div>
+        <h2 class="chapter-title">Launch Day Fires</h2>
+        <div class="chapter-body">
+          <p>Vercel auto-deployed on every push. The site was live at <strong style="color:#fff">campkada.vercel.app</strong>. Then came the real-world tests.</p>
+
+          <div class="callout callout-warn">
+            <strong>🔥 Fire 1: Missing Images</strong><br/>
+            <code style="font-family:monospace;font-size:0.8rem">public/images/home/</code> was never committed to git. Twelve images existed locally but never made it to the repository. Vercel had nothing to serve.
+          </div>
+          <div class="callout callout-success">
+            <strong>✓ Fix:</strong> One <code style="font-family:monospace;font-size:0.8rem">git add public/images/</code> — all twelve committed and pushed. Next deploy, images loaded.
+          </div>
+
+          <div class="callout callout-warn" style="margin-top:1rem;">
+            <strong>🔥 Fire 2: Enquiry Form Error</strong><br/>
+            "Something went wrong. Please try again." — every form submission failing on production.
+          </div>
+          <div class="callout callout-success">
+            <strong>✓ Fix:</strong> <code style="font-family:monospace;font-size:0.8rem">MONGODB_URI</code> was never added to Vercel environment variables. Set it in the dashboard + Atlas Network Access opened to all IPs. Form started working immediately.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 8 -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">08</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">Analytics</div>
+        <h2 class="chapter-title">Visibility Added</h2>
+        <div class="chapter-body">
+          <p>With the site working, the next step was knowing how people used it. Vercel Analytics was added in three moves:</p>
+          <div class="callout-code">
+            <span class="comment"># 1. Install</span><br />
+            npm i @vercel/analytics<br /><br />
+            <span class="comment"># 2. Import in layout.tsx</span><br />
+            import &#123; Analytics &#125; from "@vercel/analytics/next"<br /><br />
+            <span class="comment"># 3. Drop in the JSX</span><br />
+            &lt;Analytics /&gt;
+          </div>
+          <p>Three lines. Zero configuration. Every page view, every navigation — now tracked and visible in the Vercel dashboard.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 9 — Stats -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">09</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">By the Numbers</div>
+        <h2 class="chapter-title">What Got Built</h2>
+        <div class="chapter-body">
+          <div class="stat-strip">
+            <div class="stat-item">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Service Lines</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">9</div>
+              <div class="stat-label">Pages</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">1</div>
+              <div class="stat-label">API Endpoint</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">25</div>
+              <div class="stat-label">Images</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">2</div>
+              <div class="stat-label">Feature Branches</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">∞</div>
+              <div class="stat-label">Trail Stories</div>
+            </div>
+          </div>
+          <div class="pill-list" style="margin-top:1.25rem;">
+            <span class="pill green">Enquiry forms live</span>
+            <span class="pill green">MongoDB connected</span>
+            <span class="pill green">Vercel deployed</span>
+            <span class="pill green">Analytics tracking</span>
+            <span class="pill green">Brand voice set</span>
+            <span class="pill green">Phase 2 ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 10 — Next Steps -->
+    <div class="chapter">
+      <div class="chapter-left">
+        <div class="chapter-num">10</div>
+        <div class="chapter-dot"></div>
+        <div class="chapter-line"></div>
+      </div>
+      <div class="chapter-content">
+        <div class="chapter-tag">What's Next</div>
+        <h2 class="chapter-title">The Road Ahead</h2>
+        <div class="chapter-body">
+          <p>Phase 1 is live. The gear is browsable. The forms are working. The enquiries are reaching the database. But the roadmap continues.</p>
+          <div class="next-steps">
+            <h3>Next Steps</h3>
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Merge pending branches</strong> — feat/hide-prices and feat/analytics both ready for master.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>Email notifications</strong> — sendNotification() is wired up, provider TBD. Resend is the leading candidate.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Phase 2 — Cart & Orders</strong> — new Product, Order, Booking models. Cart and checkout pages. ItemCard gets showAddToCart.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-text"><strong>Phase 3 — Payments</strong> — Stripe or Razorpay integration. Full automation of the order flow.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">5</div>
+              <div class="step-text"><strong>Pricing goes live</strong> — one prop change restores prices across every card and detail page.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="story-footer">
+    <div class="logo-mark">CampKada</div>
+    <div class="tech-pills">
+      <span class="pill">Next.js</span>
+      <span class="pill">TypeScript</span>
+      <span class="pill">Tailwind CSS</span>
+      <span class="pill">MongoDB Atlas</span>
+      <span class="pill">Vercel</span>
+      <span class="pill">Claude Code</span>
+    </div>
+    <p>campkada.vercel.app &nbsp;·&nbsp; Built with Claude Code &nbsp;·&nbsp; 2026</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.chapter').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
