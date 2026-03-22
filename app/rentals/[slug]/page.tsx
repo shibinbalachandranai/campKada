@@ -3,7 +3,6 @@ import Image from "next/image";
 import { getRentalBySlug, rentals } from "@/lib/data/rentals";
 import Badge from "@/components/shared/Badge";
 import EnquiryFormBase from "@/components/shared/EnquiryFormBase";
-import { formatPrice } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -51,13 +50,11 @@ export default async function RentalDetailPage({
             <p className="text-sm text-bark/50 uppercase tracking-widest mb-1">{rental.category}</p>
             <h1 className="text-3xl font-bold text-bark">{rental.name}</h1>
             <div className="mt-3 flex items-center gap-3">
-              <span className="text-2xl font-extrabold text-forest">
-                {formatPrice(rental.pricePerDay)}<span className="text-base font-normal text-bark/60">/day</span>
-              </span>
               <Badge variant={rental.available ? "available" : "unavailable"}>
                 {rental.available ? "Available" : "Unavailable"}
               </Badge>
             </div>
+            <p className="mt-2 text-sm text-bark/50">Pricing available on enquiry — get in touch below.</p>
           </div>
 
           <p className="text-bark/70 leading-relaxed">{rental.description}</p>

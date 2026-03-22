@@ -3,7 +3,6 @@ import Image from "next/image";
 import { getProductBySlug, products } from "@/lib/data/products";
 import Badge from "@/components/shared/Badge";
 import EnquiryFormBase from "@/components/shared/EnquiryFormBase";
-import { formatPrice } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -57,11 +56,11 @@ export default async function ProductDetailPage({
             <p className="text-sm text-bark/50 uppercase tracking-widest mb-1">{product.category}</p>
             <h1 className="text-3xl font-bold text-bark">{product.name}</h1>
             <div className="mt-3 flex items-center gap-3">
-              <span className="text-2xl font-extrabold text-forest">{formatPrice(product.price)}</span>
               <Badge variant={product.inStock ? "in-stock" : "out-of-stock"}>
                 {product.inStock ? "In Stock" : "Out of Stock"}
               </Badge>
             </div>
+            <p className="mt-2 text-sm text-bark/50">Pricing available on enquiry — get in touch below.</p>
           </div>
 
           <p className="text-bark/70 leading-relaxed">{product.description}</p>
