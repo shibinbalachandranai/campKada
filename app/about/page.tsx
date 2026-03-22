@@ -21,39 +21,52 @@ export default function AboutPage() {
           </div>
 
           <SectionHeading
-            title="About CampKada"
-            subtitle="We're a team of passionate outdoor enthusiasts who couldn't find a one-stop shop for all things adventure — so we built it."
+            title="The Soul of a Journey"
+            subtitle="Travel is not a hobby for us. It is a calling."
             className="mb-10"
           />
 
+          {/* Story */}
           <div className="prose prose-bark max-w-none space-y-6 text-bark/70 leading-relaxed">
             <p>
-              CampKada started with a simple frustration: every time we planned a trip, we'd spend hours across multiple websites trying to find quality gear, a reliable rental, and an experienced guide. There had to be a better way.
+              Born from real journeys through mountains, forests, snow, and star-filled nights, Camp Kada is inspired by moments when we wished we had the right gear to travel safer and better. Our treks to Kedarkantha and Everest Base Camp gifted us unforgettable views — and taught us powerful lessons.
             </p>
             <p>
-              So in 2021, we built CampKada — an outdoor lifestyle platform that combines a curated gear shop, a short-term rental service, and guided experiences, all in one place. Every product we stock and every route we guide has been tested by our own team on actual trails.
+              We learned that no journey is complete without proper planning and reliable equipment. That realization gave birth to Camp Kada — a place where all camping and trekking essentials come together under one roof, with uncompromised quality.
             </p>
             <p>
-              We partner with local guides who have deep knowledge of their regions, and we only stock gear from brands we personally trust. Our rental fleet is maintained after every use, so you can be confident in what you pick up.
-            </p>
-            <p>
-              Whether you're a first-time camper or a seasoned mountaineer, CampKada is designed to meet you where you are and help you get outside more often, with less friction.
+              Camp Kada doesn&apos;t just sell gear. We create journeys. We help create memories.
             </p>
           </div>
+
+          {/* Quote */}
+          <blockquote className="mt-10 border-l-4 border-forest pl-6 italic text-bark/60 leading-relaxed">
+            &ldquo;From the moment you pack your bag to the stories you bring back home — Camp Kada is your silent travel companion.&rdquo;
+          </blockquote>
 
           {/* Mission & Vision */}
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="rounded-2xl bg-forest p-7 text-white">
-              <h3 className="text-lg font-bold mb-3">Our Mission</h3>
-              <p className="text-sm text-white/80 leading-relaxed">
-                Make camping accessible to everyone by providing reliable gear, transparent pricing, and simple experiences.
-              </p>
+              <h3 className="text-lg font-bold mb-4">Our Mission</h3>
+              <ul className="space-y-3 text-sm text-white/80 leading-relaxed">
+                <li>
+                  <span className="font-semibold text-white">Elevating the Journey —</span> Provide high-quality, durable, and safe camping and outdoor adventure gear all under one roof for every travel enthusiast.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Nature with Comfort —</span> Committed to respecting nature while transforming every journey into a seamless, comfortable, and unforgettable experience.
+                </li>
+              </ul>
             </div>
             <div className="rounded-2xl bg-bark p-7 text-white">
-              <h3 className="text-lg font-bold mb-3">Our Vision</h3>
-              <p className="text-sm text-white/80 leading-relaxed">
-                To build India&apos;s most trusted outdoor brand and inspire responsible, nature-first exploration.
-              </p>
+              <h3 className="text-lg font-bold mb-4">Our Vision</h3>
+              <ul className="space-y-3 text-sm text-white/80 leading-relaxed">
+                <li>
+                  <span className="font-semibold text-white">India&apos;s Premier Choice —</span> Establish CampKada as India&apos;s most trusted and inspiring camping and outdoor lifestyle brand.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Adventure as a Lifestyle —</span> Redefine camping, trekking, and off-road adventures — moving them beyond &ldquo;luxury&rdquo; to make them an accessible lifestyle for everyone.
+                </li>
+              </ul>
             </div>
           </div>
 
