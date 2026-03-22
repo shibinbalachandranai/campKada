@@ -35,7 +35,10 @@ export default function AboutPage() {
               We learned that no journey is complete without proper planning and reliable equipment. That realization gave birth to Camp Kada — a place where all camping and trekking essentials come together under one roof, with uncompromised quality.
             </p>
             <p>
-              Camp Kada doesn&apos;t just sell gear. We create journeys. We help create memories.
+              Camp Kada doesn&apos;t just sell gear.
+            </p>
+            <p className="text-xl font-semibold text-forest leading-snug">
+              We create journeys.<br />We help create memories.
             </p>
           </div>
 
