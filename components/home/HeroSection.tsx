@@ -1,9 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-forest">
-      <div className="absolute inset-0 bg-gradient-to-b from-forest/60 via-forest/40 to-forest/80" />
+      <Image
+        src="/images/home/hero.png"
+        alt="Adventure starts here"
+        fill
+        className="object-cover"
+        priority
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/35 to-black/60" />
 
       <div className="relative mx-auto max-w-7xl px-4 py-24 md:px-8 md:py-32">
         <div className="max-w-2xl">
